@@ -4,6 +4,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,20 +17,20 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('home', [
+    return view('home',[
         "title" => "Home"
     ]);
 });
 
 Route::get('/about', function () {
-    return view('about',[
+    return view('about', [
         "title" => "About",
-        "name" => "Diva Nur Haffifah",
-        "email" => "Diva@gmail.com",
-        "image" => "diva.jpg"
+        "name" => "Diva Nur Hafifah ",
+        "email" => "diva@gmail.com",
+        "image" => "diva.jpeg"
     ]);
 });
 
 
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('posts/{slug}', [POstController::class, 'show']);
+Route::get('/blog', [PostController::class, 'index']);
+Route::get('posts/{post:slug}', [PostController::class, 'show']);
