@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardPostController extends Controller
 {
@@ -93,6 +94,16 @@ class DashboardPostController extends Controller
         }
 
         $validatedData = $request->validate($rules);
+        // Jika ada file image yang dikirim dari form create post maka akan disimpan di storage
+        if ($request->file('image')) {
+            // Jika ada file image lama yang dikirim dari form edit post 
+            if ($request->oldImage) {
+                // Maka file image lama akan dihapus dari storage
+                Storage::delete($request->oldImage);
+            }
+            // Menyimpan file image baru ke dalam storage
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body, 200));
 
@@ -106,6 +117,12 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // Jika ada file image yang dikirim dari form delete post
+        if ($post->image) {
+            // Maka file image lama akan dihapus dari storage
+            Storage::delete($post->image);
+        }
+        
         Post::destroy($post->id);
 
         return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
