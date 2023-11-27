@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\AdminCategoryController;
 
 
 /*
@@ -58,3 +59,6 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+
+// Jika ada rute yang metode requestnya get yang alamatnya adalah '/dashboard/categories', maka jalankan method index dari 'AdminCategoryController' dengan middleware admin (hanya untuk user yang sudah login dan admin)
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
