@@ -35,11 +35,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // User::create([
-        //     'name'=>'Moch Priamitra',
-        //     'email'=>'alif@gmail.com',
-        //     'password'=>bcrypt('12345')
-        // ]);
+        User::create([
+            'name'=>'Moch Priamitra',
+            'username' => "alif",
+            'email'=>'alif@gmail.com',
+            'password'=>bcrypt('12345')
+        ]);
 
         // User::create([
         //     'name'=>'Diva Nur',
